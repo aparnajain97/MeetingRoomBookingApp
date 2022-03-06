@@ -1,0 +1,19 @@
+.selected {
+  border-bottom: 2px solid;
+  padding: 10px;
+  text-align: left;
+  background-color: lightgrey;
+  cursor: pointer;
+}
+
+.unselected {
+  border-bottom: 2px solid;
+  padding: 10px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.roomName {
+  margin: 0;
+  padding-bottom: 5px;
+}

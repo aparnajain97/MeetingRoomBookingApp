@@ -1,0 +1,25 @@
+.overviewsContainer {
+  border: 2px solid;
+  width: 35%;
+  height: 339px;
+  margin: 0 auto;
+}
+
+.overview {
+  border-bottom: 2px solid;
+  padding-bottom: 15px;
+  padding-left: 30px;
+  text-align: left;
+}
+
+.addMeetingButton {
+  width: 99%;
+  background-color: dodgerblue;
+  height: 13%;
+  font-size: large;
+  margin: 3px;
+}
+
+.h3HeadingStyle {
+  margin-bottom: 7px;
+}
