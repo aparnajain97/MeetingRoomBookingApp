@@ -59,7 +59,6 @@ const Overview = () => {
   
   useEffect(() => {
     getAllBuildings().then(data => {
-      console.log(data);
       setBuildings(data.Buildings);
     })
   }, []);

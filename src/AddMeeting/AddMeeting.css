@@ -1,6 +1,5 @@
 .addMeetingContainer {
   width: 35%;
-  height: 252px;
   margin: 15px auto;
   border: 2px solid;
   text-align: left;
@@ -27,4 +26,11 @@
 .h4Label {
   margin: 0;
   padding: 4px 8px 4px 4px;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 14px;
+  padding: 10px;
+  font-weight: bold;
 }

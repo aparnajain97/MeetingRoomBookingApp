@@ -5,7 +5,6 @@ const Room = (props) => {
   const { room: {roomId, roomName, buildingName, floor }, selected } = props;
 
   const handleSelect = (ev) => {
-    console.log(ev.currentTarget);
     props.handleSelect(props.room, props.index);
   }
   return (

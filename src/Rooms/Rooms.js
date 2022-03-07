@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { getAllMeetingRooms, saveMeeting } from '../ApiProvider/provider';
-import { isMeetingCurrentlyRunning } from '../Utils/utils';
 import Room from './Room';
 import RoomsCss from './Rooms.css';
 
-const findAvailableRooms = (allMeetingRooms) => {
+const findAvailableRooms = (allMeetingRooms, meetingDetails) => {
   const allAvailableRooms = [];
 
   allMeetingRooms.forEach(meetingRoom => {
@@ -19,8 +18,9 @@ const findAvailableRooms = (allMeetingRooms) => {
     let isBooked = false;
 
     meetings.forEach(meeting => {
-      const currentDate = new Date();
-      if (isMeetingCurrentlyRunning(meeting, currentDate)) {
+      if ((meeting.date === meetingDetails.meetingDate
+          && meeting.startTime < meetingDetails.endTime
+          && meeting.endTime > meetingDetails.startTime)) {
         isBooked = true;
       }
     });
@@ -44,21 +44,20 @@ const Rooms = (props) => {
   const [showrooms, setShowRooms] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState();
   const [selectedRoom, setSelectedRoom] = useState();
-  const { buildingName } = props.meetingDetails;
+  const { meetingDetails, meetingDetails: { buildingName } } = props;
 
   useEffect(() => {
     getAllMeetingRooms().then(data => {
-      console.log(data);
       setAllMeetingRooms(data.MeetingRooms);
     })
   }, [])
 
   useEffect(() => {
-    if (!allMeetingRooms) {
+    if (!allMeetingRooms || !meetingDetails) {
       return;
     }
-    setAllAvailableRooms(findAvailableRooms(allMeetingRooms));
-  }, [allMeetingRooms]);
+    setAllAvailableRooms(findAvailableRooms(allMeetingRooms, meetingDetails));
+  }, [allMeetingRooms, meetingDetails]);
 
   useEffect(() => {
     if (!allAvailableRooms) {
@@ -70,8 +69,9 @@ const Rooms = (props) => {
 
   const handleSave = () => {
     const payload = {...selectedRoom, id: Math.floor(Math.random() * 100), title: "Booked for interview"};
-    saveMeeting(payload).then(data => {
+    saveMeeting(payload).then(() => {
       alert('saved successfully');
+      window.location.reload();
     }).catch(error => {
       alert('Error saving your meeting. Please try again.');
       console.log("Error saving meeting", JSON.stringify(error));
@@ -99,9 +99,9 @@ const Rooms = (props) => {
                     handleSelect={selectRoom}
                   />
                 ))}
-              <button className='saveButton' onClick={handleSave}>Save</button>
+              <button className='saveButton' onClick={handleSave} disabled={selectedIndex===undefined}>Save</button>
             </div>
-            : <div className='noRoomsAvalaible'>No rooms available in this building. Please select different date/time.</div>
+            : <div className='noRoomsAvailable'>No rooms available in this building. Please select different date/time.</div>
           }
           </div>
         )

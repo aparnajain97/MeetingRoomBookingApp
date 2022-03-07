@@ -1,7 +1,6 @@
 const isMeetingToday = (meeting, currentDate) => {
   const { date } = meeting;
-  const currDate = `${("0" + currentDate.getDate()).slice(-2)}/${("0" + (currentDate.getMonth() + 1)).slice(-2)}/${currentDate.getFullYear()}`
-  return (date === currDate);
+  return isSameDate(date, currentDate);
 }
 
 const isMeetingCurrentlyRunning = (meeting, currentDate) => {
@@ -30,4 +29,14 @@ const getFormattedDate = (date) => {
   return `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
 }
 
-export {isMeetingToday, isMeetingCurrentlyRunning, getFormattedDate};
+/**
+ * 
+ * @param {String} date date in dd/mm/yyyy format
+ * @param {string} dateToCompare instance of new Date()
+ */
+const isSameDate = (date, dateToCompare) => {
+  const dt = `${("0" + dateToCompare.getDate()).slice(-2)}/${("0" + (dateToCompare.getMonth() + 1)).slice(-2)}/${dateToCompare.getFullYear()}`
+  return (date === dt);
+}
+
+export {isMeetingToday, isMeetingCurrentlyRunning, getFormattedDate, isSameDate};
